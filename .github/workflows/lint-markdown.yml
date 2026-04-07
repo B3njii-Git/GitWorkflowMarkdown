@@ -1,20 +1,28 @@
-name: "Run Markdownlint"
+name: "Revision de MarkDown"
 
 on:
   push:
-    branches: [ "main", "develop" ]
+    # Se ejecuta en las ramas principales y de desarrollo según la pauta
+    branches: [ "main", "develop", "feature/**" ]
   pull_request:
+    # Se ejecuta en cada pull request hacia estas ramas
     branches: [ "main", "develop" ]
 
 jobs:
-  markdown-lint:
+  markdownlint:
+    name: "Check Documentation Quality"
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
+      - name: "Checkout Code"
         [cite_start]uses: actions/checkout@v4 [cite: 67]
 
       - name: "Run Markdownlint"
         [cite_start]uses: davidanson/markdownlint-cli2-action@v16 [cite: 80]
         with:
+          # Busca el archivo .markdownlint.json en la raíz
           [cite_start]config: '.markdownlint.json' [cite: 82]
+          # Revisa todos los archivos markdown del repositorio
           [cite_start]globs: '**/*.md' [cite: 84]
+
+      - name: "Aprobacion de Actions"
+        run: echo "🚀 Revision de MarkDown finalizada con exito. Documentacion aprobada."
